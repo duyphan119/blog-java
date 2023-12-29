@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{admin/fragments/head :: head}"> </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
+      <div
+        class="preloader flex-column justify-content-center align-items-center"
+      >
+        <img
+          class="animation__shake"
+          th:src="@{/assets/dist/img/AdminLTELogo.png}"
+          alt="AdminLTELogo"
+          height="60"
+          width="60"
+        />
+      </div>
+
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a th:href="@{/admin}" class="nav-link">Trang chủ</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a th:href="@{/admin/category}" class="nav-link">Danh mục</a>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul th:replace="~{admin/fragments/rightnav :: rightnav}"></ul>
+      </nav>
+
+      <!-- /.navbar -->
+
+      <!-- Main Sidebar Container -->
+      <aside th:replace="~{admin/fragments/aside :: aside}"></aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Quản lý danh mục</h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a th:href="@{/admin}">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a th:href="@{/admin/category}">Danh mục</a>
+                  </li>
+                  <li class="breadcrumb-item active">Chỉnh sửa</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+              <div class="col-12">
+                <!-- small box -->
+                <form
+                  th:object="${category}"
+                  th:action="@{/admin/category/edit}"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Chỉnh sửa danh mục</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <input hidden th:field="*{id}" />
+                      <div class="box-body">
+                        <div style="display: flex; gap: 2rem">
+                          <div>
+                            <input th:field="*{imageUrl}" hidden />
+                            <input
+                              type="file"
+                              id="image"
+                              style="display: none"
+                              name="image"
+                            />
+                            <div class="form-group">
+                              <label
+                                id="image-label"
+                                for="image"
+                                style="
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: center;
+                                  height: 180px;
+                                  width: 180px;
+                                  font-size: 40px;
+                                  cursor: pointer;
+                                  border-radius: 50px;
+                                  border: 1px dashed #000;
+                                  overflow: hidden;
+                                "
+                              >
+                                <i class="fa fa-image"></i>
+                              </label>
+                            </div>
+                            <script>
+                              const imageElm = document.getElementById("image");
+                              const url =
+                                document.getElementById("imageUrl").value;
+                              if (url) {
+                                document.getElementById(
+                                  "image-label"
+                                ).innerHTML = `
+                          <img src="${url}" alt="thumbnail" height="180px" width="180px" />
+                        `;
+                              }
+                              imageElm.addEventListener("change", function (e) {
+                                const file = e.target.files[0];
+                                document.getElementById(
+                                  "image-label"
+                                ).innerHTML = file
+                                  ? `
+                          <img src="${URL.createObjectURL(
+                            file
+                          )}" alt="thumbnail" height="180px" width="180px" />
+                        `
+                                  : `<i class="fa fa-image"></i>`;
+                              });
+                            </script>
+                          </div>
+                          <div style="flex: 1">
+                            <div class="form-group">
+                              <label for="categoryName">Tên danh mục</label>
+                              <input
+                                class="form-control"
+                                id="categoryName"
+                                th:field="*{name}"
+                                required
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="categoryDescription">Mô tả</label>
+                              <textarea
+                                id="categoryDescription"
+                                th:field="*{description}"
+                                class="form-control"
+                                rows="1"
+                              >
+                              </textarea>
+                            </div>
+                            <div class="form-group">
+                              <label class="" for="categoryIsActive">
+                                <input
+                                  type="checkbox"
+                                  id="categoryIsActive"
+                                  th:field="*{isActive}"
+                                />
+                                Hiển thị
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                      <button type="submit" class="btn btn-primary">
+                        Chỉnh sửa
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row (main row) -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <footer th:replace="~{admin/fragments/footer :: footer}"></footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <th:block th:replace="~{admin/fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>

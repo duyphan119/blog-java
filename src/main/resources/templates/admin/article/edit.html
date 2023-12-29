@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{admin/fragments/head :: head}"> </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+      <header th:replace="~{admin/fragments/header :: header}"></header>
+
+      <!-- =============================================== -->
+
+      <!-- Left side column. contains the sidebar -->
+      <aside th:replace="~{admin/fragments/aside :: aside}"></aside>
+
+      <!-- =============================================== -->
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>Quản lý menu trang giao diện</h1>
+          <ol class="breadcrumb">
+            <li>
+              <a href="#"><i class="fa fa-dashboard"></i> Home</a>
+            </li>
+            <li><a href="#">Examples CategoryID = ${{categoryId}}</a></li>
+            <li class="active">Blank page</li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Default box -->
+          <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Thêm mới menu</h3>
+              </div>
+              <!-- /.box-header -->
+              <!-- form start -->
+              <form
+                th:object="${category}"
+                th:action="@{/admin/category/edit}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <input hidden th:field="*{id}" />
+                <div class="box-body">
+                  <div style="display: flex; gap: 2rem">
+                    <div>
+                      <input th:field="*{imageUrl}" hidden />
+                      <input
+                        type="file"
+                        id="image"
+                        style="display: none"
+                        name="image"
+                      />
+                      <div class="form-group">
+                        <label
+                          id="image-label"
+                          for="image"
+                          style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 180px;
+                            width: 180px;
+                            font-size: 40px;
+                            cursor: pointer;
+                            border-radius: 50px;
+                            border: 1px dashed #000;
+                            overflow: hidden;
+                          "
+                        >
+                          <i class="fa fa-image"></i>
+                        </label>
+                      </div>
+                      <script>
+                        const imageElm = document.getElementById("image");
+                        const url = document.getElementById("imageUrl").value;
+                        if (url) {
+                          document.getElementById("image-label").innerHTML = `
+                          <img src="${url}" alt="thumbnail" height="180px" width="180px" />
+                        `;
+                        }
+                        imageElm.addEventListener("change", function (e) {
+                          const file = e.target.files[0];
+                          document.getElementById("image-label").innerHTML =
+                            file
+                              ? `
+                          <img src="${URL.createObjectURL(
+                            file
+                          )}" alt="thumbnail" height="180px" width="180px" />
+                        `
+                              : `<i class="fa fa-image"></i>`;
+                        });
+                      </script>
+                    </div>
+                    <div style="flex: 1">
+                      <div class="form-group">
+                        <label for="categoryName">Tên danh mục</label>
+                        <input
+                          class="form-control"
+                          id="categoryName"
+                          th:field="*{name}"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="categoryDescription">Mô tả</label>
+                        <textarea
+                          id="categoryDescription"
+                          th:field="*{description}"
+                          class="form-control"
+                          rows="1"
+                        >
+                        </textarea>
+                      </div>
+                      <div class="form-group">
+                        <label class="" for="categoryIsActive">
+                          <input
+                            type="checkbox"
+                            id="categoryIsActive"
+                            th:field="*{isActive}"
+                          />
+                          Hiển thị
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">
+                    Cập nhật
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- /.box -->
+          </div>
+          <!-- /.box -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+
+      <footer th:replace="~{/admin/fragments/footer :: footer}"></footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery 3 -->
+
+    <th:block th:replace="~{/admin/fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>

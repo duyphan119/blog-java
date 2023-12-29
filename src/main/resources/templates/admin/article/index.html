@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{admin/fragments/head :: head}"> </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
+      <div
+        class="preloader flex-column justify-content-center align-items-center"
+      >
+        <img
+          class="animation__shake"
+          th:src="@{/assets/dist/img/AdminLTELogo.png}"
+          alt="AdminLTELogo"
+          height="60"
+          width="60"
+        />
+      </div>
+
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a th:href="@{/admin}" class="nav-link">Trang chủ</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a th:href="@{/admin/article}" class="nav-link">Bài viết</a>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul th:replace="~{admin/fragments/rightnav :: rightnav}"></ul>
+      </nav>
+
+      <!-- /.navbar -->
+
+      <!-- Main Sidebar Container -->
+      <aside th:replace="~{admin/fragments/aside :: aside}"></aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Quản lý bài viết</h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a th:href="@{/admin}">Trang chủ</a>
+                  </li>
+                  <li class="breadcrumb-item active">Bài viết</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+              <div class="col-12">
+                <!-- small box -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Thêm mới bài viết</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <div class="actions d-flex justify-content-between mb-3">
+                      <div>
+                        <a
+                          th:href="@{/admin/article/add}"
+                          role="button"
+                          class="btn btn-primary"
+                        >
+                          <i class="fa fa-plus mr-1"></i> Thêm mới bài viết
+                        </a>
+                      </div>
+                      <form
+                        method="GET"
+                        th:action="@{/admin/article}"
+                        class="input-group input-group-sm"
+                        style="width: 180px; display: flex; item-seft: strech"
+                      >
+                        <input
+                          type="text"
+                          th:value="${keyword}"
+                          name="q"
+                          class="form-control pull-right"
+                          placeholder="Tìm kiếm ..."
+                          style="height: 100%"
+                        />
+                        <input hidden name="p" th:value="${currentPage}" />
+                        <div class="input-group-btn">
+                          <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Tiêu đề</th>
+                          <th>Hình ảnh</th>
+                          <th>Ngày tạo</th>
+                          <th>Trạng thái</th>
+                          <th>Tùy chọn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="article, articleStat : ${articleList}">
+                          <td th:text="${articleStat.count}">1</td>
+                          <td th:text="${article.title}">Title</td>
+                          <td style="width: 136px">
+                            <img
+                              alt="thumbnail"
+                              width="120px"
+                              height="80px"
+                              th:src="${article.imageUrl}"
+                              style="obejct-fit: cover"
+                            />
+                          </td>
+                          <td
+                            th:text="${#temporals.format(article.createdAt,'yyyy-MM-dd')}"
+                          >
+                            2024-01-01
+                          </td>
+                          <td>
+                            <span
+                              th:if="${article.isActive}"
+                              class="label label-success"
+                              >Hiển thị</span
+                            >
+                            <span
+                              th:unless="${article.isActive}"
+                              class="label label-danger"
+                              >Ẩn</span
+                            >
+                          </td>
+                          <td>
+                            <a
+                              th:href="@{/admin/article/{articleId}/edit(articleId=${article.id})}"
+                              class="btn btn-success"
+                              >Sửa</a
+                            >
+                            <a
+                              th:href="@{/admin/article/{articleId}/delete(articleId=${article.id})}"
+                              class="btn btn-danger"
+                              onclick="return confirm('Bạn có chắc chắn xoá?')"
+                              >Xóa</a
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                      <li class="page-item" th:if="${currentPage > 1}">
+                        <a
+                          class="page-link"
+                          th:href="@{/admin/article(q=${keyword})}"
+                          >«</a
+                        >
+                      </li>
+                      <li class="page-item" th:if="${currentPage > 1}">
+                        <a
+                          class="page-link"
+                          th:href="@{/admin/article(p=${currentPage-1},q=${keyword})}"
+                          th:text="${currentPage - 1}"
+                          >1</a
+                        >
+                      </li>
+                      <li class="page-item active">
+                        <a
+                          class="page-link"
+                          id="currentPage"
+                          th:text="${currentPage}"
+                          >2</a
+                        >
+                      </li>
+                      <li
+                        class="page-item"
+                        th:if="${currentPage <= totalPages and currentPage < totalPages }"
+                      >
+                        <a
+                          class="page-link"
+                          th:href="@{/admin/article(p=${currentPage + 1},q=${keyword})}"
+                          th:text="${currentPage + 1}"
+                          >3</a
+                        >
+                      </li>
+                      <li class="page-item" th:if="${currentPage < totalPages}">
+                        <a
+                          class="page-link"
+                          th:href="@{/admin/article(p=${totalPages},q=${keyword})}"
+                          >»</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <script>
+                    document
+                      .getElementById("currentPage")
+                      .addEventListener("click", function (event) {
+                        event.preventDefault();
+                      });
+                  </script>
+                </div>
+              </div>
+              <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row (main row) -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <footer th:replace="~{admin/fragments/footer :: footer}"></footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <th:block th:replace="~{admin/fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>
