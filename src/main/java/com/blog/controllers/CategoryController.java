@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blog.models.Category;
 import com.blog.services.CategoryService;
@@ -98,12 +99,14 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{categoryId}/delete")
-    public String deleteCategory(@PathVariable("categoryId") String categoryId) {
+    public String deleteCategory(@PathVariable("categoryId") String categoryId, RedirectAttributes redirectAttrs) {
         Optional<Category> resultCategory = this.categoryService.findById(categoryId);
 
         if (resultCategory.isPresent()) {
             this.cloudinaryService.deleteURL(resultCategory.get().getImageUrl());
             this.categoryService.deleteById(categoryId);
+            redirectAttrs.addFlashAttribute("toastMsg", "Xóa thành công");
+            redirectAttrs.addFlashAttribute("toastType", "success");
         }
 
         return "redirect:/admin/category";

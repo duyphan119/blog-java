@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blog.models.Article;
 import com.blog.models.Category;
@@ -123,12 +124,14 @@ public class ArticleController {
     }
 
     @GetMapping("/article/{articleId}/delete")
-    public String deleteArticle(@PathVariable("articleId") String articleId) {
+    public String deleteArticle(@PathVariable("articleId") String articleId, RedirectAttributes redirectAttrs) {
         Optional<Article> resultArticle = this.articleService.findById(articleId);
 
         if (resultArticle.isPresent()) {
             this.cloudinaryService.deleteURL(resultArticle.get().getImageUrl());
             this.articleService.deleteById(articleId);
+            redirectAttrs.addFlashAttribute("toastMsg", "Xóa thành công");
+            redirectAttrs.addFlashAttribute("toastType", "success");
         }
 
         return "redirect:/admin/article";

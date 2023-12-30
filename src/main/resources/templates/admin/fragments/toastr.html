@@ -1,0 +1,14 @@
+<th:block th:fragment="toastr">
+  <script th:src="@{/assets/plugins/toastr/toastr.min.js}"></script>
+  <th:block th:if="${toastMsg}">
+    <div th:text="${toastMsg}" id="toast-msg"></div>
+    <div th:text="${toastType}" id="toast-type"></div>
+    <script>
+      const toastType = document.getElementById("toast-type").textContent;
+      const toastMsg = document.getElementById("toast-msg").textContent;
+      if (toastType === "success") {
+        toastr.success(toastMsg);
+      }
+    </script>
+  </th:block>
+</th:block>
