@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>AdminLTE 2 | Log in</title>
-    <meta
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-      name="viewport"
-    />
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/AdminLTE.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AdminLTE 3 | Log in</title>
 
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
     />
-    <script nonce="4e234e6d-40cd-4cec-8411-f40b0a624cc7">
+
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/plugins/fontawesome-free/css/all.min.css}"
+    />
+
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css}"
+    />
+
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/css/adminlte.min.css?v=3.2.0}"
+    />
+    <script nonce="023209de-e74d-44ba-8628-ccddacc4d605">
       (function (w, d) {
         !(function (dp, dq, dr, ds) {
           dp[dr] = dp[dr] || {};
@@ -83,93 +91,77 @@
       })(window, document);
     </script>
   </head>
-  <body class="hold-transition login-page" style="height: auto">
-    <div
-      class="login-box"
-      style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -100%);
-      "
-    >
+  <body class="hold-transition login-page">
+    <div class="login-box">
       <div class="login-logo">
         <a href="../../index2.html"><b>Admin</b>LTE</a>
       </div>
 
-      <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-        <form th:action="@{/logon}" method="post">
-          <div class="form-group has-feedback">
-            <input
-              type="email"
-              name="username"
-              class="form-control"
-              placeholder="Email"
-              value="duychomap123@gmail.com"
-            />
-            <span
-              class="glyphicon glyphicon-envelope form-control-feedback"
-            ></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input
-              name="hashedPassword"
-              type="password"
-              class="form-control"
-              placeholder="Password"
-              value="123456"
-            />
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">
-              <div class="checkbox icheck">
-                <label
-                  for="rememberMe"
-                  style="display: flex; align-items: center; gap: 0.5rem"
-                >
-                  <input
-                    id="rememberMe"
-                    type="checkbox"
-                    style="
-                      margin-left: 0;
-                      position: relative;
-                      transform: translateY(-2px);
-                    "
-                  />
-                  Remember Me
-                </label>
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">Sign in to start your session</p>
+          <form th:action="@{/logon}" method="post">
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                name="username"
+                class="form-control"
+                placeholder="Email"
+                value="duychomap123@gmail.com"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
               </div>
             </div>
-
-            <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">
-                Sign In
-              </button>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                name="hashedPassword"
+                value="123456"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
-        <a href="#">I forgot my password</a><br />
-        <a href="register.html" class="text-center"
-          >Register a new membership</a
-        >
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember" />
+                  <label for="remember"> Remember Me </label>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">
+                  Sign In
+                </button>
+              </div>
+            </div>
+          </form>
+          <p class="mb-1">
+            <a href="forgot-password.html">I forgot my password</a>
+          </p>
+          <p class="mb-0">
+            <a href="register.html" class="text-center"
+              >Register a new membership</a
+            >
+          </p>
+        </div>
       </div>
     </div>
 
-    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script th:src="@{/assets/plugins/jquery/jquery.min.js}"></script>
 
-    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script
+      th:src="@{/assets/plugins/bootstrap/js/bootstrap.bundle.min.js}"
+    ></script>
 
-    <script src="../../plugins/iCheck/icheck.min.js"></script>
-    <script>
-      $(function () {
-        $("input").iCheck({
-          checkboxClass: "icheckbox_square-blue",
-          radioClass: "iradio_square-blue",
-          increaseArea: "20%" /* optional */,
-        });
-      });
-    </script>
+    <script th:src="@{/assets/dist/js/adminlte.min.js?v=3.2.0}"></script>
   </body>
 </html>
