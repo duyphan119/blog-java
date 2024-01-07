@@ -1,6 +1,5 @@
 package com.blog.services.impl;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,8 +25,6 @@ public class ArticleServiceImpl implements ArticleService {
     public Article create(Article article) {
         try {
             article.setSlug(utilService.toSlug(article.getTitle()));
-            article.setCreatedAt(LocalDateTime.now());
-            article.setUpdatedAt(LocalDateTime.now());
             return articleRepository.save(article);
         } catch (Exception e) {
             return null;
@@ -43,7 +40,6 @@ public class ArticleServiceImpl implements ArticleService {
     public Article update(Article article) {
         try {
             article.setSlug(utilService.toSlug(article.getTitle()));
-            article.setUpdatedAt(LocalDateTime.now());
             return articleRepository.save(article);
         } catch (Exception e) {
             return null;
@@ -66,8 +62,18 @@ public class ArticleServiceImpl implements ArticleService {
 
         String q = queryParams.get("q");
         String keyword = q == null ? "" : q;
+        String categorySlug = queryParams.get("cat");
+
+        if (categorySlug != null && !categorySlug.equals("")) {
+            return articleRepository.findByCategory_Slug(categorySlug, pageable);
+        }
 
         return articleRepository.findByTitleIgnoreCaseContainingOrSlugIgnoreCaseContaining(keyword, keyword, pageable);
+    }
+
+    @Override
+    public Optional<Article> findBySlug(String slug) {
+        return this.articleRepository.findBySlug(slug);
     }
 
 }

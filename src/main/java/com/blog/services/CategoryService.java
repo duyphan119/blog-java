@@ -21,4 +21,8 @@ public interface CategoryService {
     Boolean deleteById(String id);
 
     Page<Category> paginate(Map<String, String> queryParams);
+
+    List<Category> findExciting(Integer limit);
+
+    Optional<Category> findBySlug(String slug);
 }

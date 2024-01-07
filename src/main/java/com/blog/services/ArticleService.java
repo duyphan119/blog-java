@@ -12,6 +12,8 @@ public interface ArticleService {
 
     Optional<Article> findById(String id);
 
+    Optional<Article> findBySlug(String slug);
+
     Article update(Article article);
 
     Boolean deleteById(String id);

@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blog.models.Article;
+import com.blog.models.ArticleComment;
 import com.blog.models.Category;
 import com.blog.models.CustomUserDetails;
 import com.blog.services.ArticleService;
@@ -27,7 +27,6 @@ import com.blog.services.CategoryService;
 import com.blog.services.CloudinaryService;
 
 @Controller
-@RequestMapping("/admin")
 public class ArticleController {
 
     @Autowired
@@ -39,7 +38,7 @@ public class ArticleController {
     @Autowired
     private CloudinaryService cloudinaryService;
 
-    @GetMapping("/article")
+    @GetMapping("/admin/article")
     public String articlePage(Model model, @RequestParam Map<String, String> queryParams) {
         Page<Article> page = this.articleService.paginate(queryParams);
         String currentPage = queryParams.get("p");
@@ -52,7 +51,7 @@ public class ArticleController {
         return "admin/article/index";
     }
 
-    @GetMapping("/article/add")
+    @GetMapping("/admin/article/add")
     public String addArticlePage(Model model) {
         Sort categorySort = Sort.by("name");
         categorySort.ascending();
@@ -70,19 +69,21 @@ public class ArticleController {
         return "admin/article/add";
     }
 
-    @PostMapping("/article/add")
+    @PostMapping("/admin/article/add")
     public String addArticle(@ModelAttribute("article") Article article,
             @RequestParam("image") MultipartFile file) {
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        article.setAuthor(customUserDetails.getUser());
+        if (article.getAuthor() == null) {
+            return "redirect:/logon";
+        }
         try {
             String imageUrl = cloudinaryService.uploadFile(file);
             article.setImageUrl(imageUrl);
         } catch (Exception e) {
-        }
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        article.setAuthor(customUserDetails.getUser());
-        if (article.getAuthor() != null) {
-            return "redirect:/logon";
         }
         if (this.articleService.create(article) != null) {
             return "redirect:/admin/article";
@@ -91,7 +92,7 @@ public class ArticleController {
         return "admin/article/add";
     }
 
-    @GetMapping("/article/{articleId}/edit")
+    @GetMapping("/admin/article/{articleId}/edit")
     public String editArticlePage(@PathVariable("articleId") String articleId, Model model) {
         Sort categorySort = Sort.by("name");
         categorySort.ascending();
@@ -107,7 +108,7 @@ public class ArticleController {
         return "admin/article/edit";
     }
 
-    @PostMapping("/article/edit")
+    @PostMapping("/admin/article/edit")
     public String editArticle(
             @ModelAttribute("article") Article article, Model model,
             @RequestParam("image") MultipartFile file) {
@@ -123,7 +124,7 @@ public class ArticleController {
         return "admin/article/edit";
     }
 
-    @GetMapping("/article/{articleId}/delete")
+    @GetMapping("/admin/article/{articleId}/delete")
     public String deleteArticle(@PathVariable("articleId") String articleId, RedirectAttributes redirectAttrs) {
         Optional<Article> resultArticle = this.articleService.findById(articleId);
 
@@ -136,4 +137,57 @@ public class ArticleController {
 
         return "redirect:/admin/article";
     }
+
+    @GetMapping("/article/{articleSlug}")
+    public String getArticleDetailPage(@PathVariable("articleSlug") String articleSlug, Model model) {
+        Optional<Article> articleResult = this.articleService.findBySlug(articleSlug);
+
+        if (articleResult.isEmpty()) {
+            return "not-found";
+        }
+
+        Article article = articleResult.get();
+        ArticleComment articleComment = new ArticleComment();
+        articleComment.setContent("articleSlug");
+        articleComment.setEmail("duychomap4657@gmail.com");
+        articleComment.setFullName("Phan Khánh Duy");
+        articleComment.setArticle(article);
+
+        model.addAttribute("article", article);
+        model.addAttribute("previousArticle", article);
+        model.addAttribute("nextArticle", article);
+        model.addAttribute("articleComment", articleComment);
+
+        model.addAttribute("title", article.getTitle());
+
+        return "article/article-detail";
+    }
+
+    @GetMapping("/article")
+    public String articleListPage(Model model, @RequestParam Map<String, String> queryParams) {
+        String categorySlug = queryParams.get("cat");
+        String currentPage = queryParams.get("p");
+        String keyword = queryParams.get("q");
+        String title = "Tất cả bài viết";
+        if (categorySlug != null) {
+            Optional<Category> categoryResult = this.categoryService.findBySlug(categorySlug);
+
+            if (categoryResult.isPresent()) {
+                Category category = categoryResult.get();
+                title = category.getName();
+                model.addAttribute("categoryName", category.getName());
+            }
+        }
+        Page<Article> articlePage = this.articleService.paginate(queryParams);
+        model.addAttribute("title", title);
+        model.addAttribute("articleList", articlePage.getContent());
+        model.addAttribute("count", articlePage.getSize());
+        model.addAttribute("totalPages", articlePage.getTotalPages());
+        model.addAttribute("currentPage", currentPage == null ? 1 : Integer.parseInt(currentPage));
+        model.addAttribute("categorySlug", categorySlug == null ? "" : categorySlug);
+        model.addAttribute("keyword", keyword == null ? "" : keyword);
+
+        return "article/index";
+    }
+
 }

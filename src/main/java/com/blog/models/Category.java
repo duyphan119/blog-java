@@ -1,6 +1,6 @@
 package com.blog.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -47,11 +47,11 @@ public class Category {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @OneToMany(mappedBy = "category")
     private Set<Article> articles;

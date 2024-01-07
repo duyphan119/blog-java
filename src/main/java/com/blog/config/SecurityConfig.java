@@ -19,7 +19,7 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    private final String[] PUBLIC_URL_LIST = { "/" };
+    private final String[] PUBLIC_URL_LIST = { "/", "/contact", "/article/**", "/api/**" };
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -37,8 +37,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/logon")
                         .usernameParameter("username")
                         .passwordParameter("hashedPassword")
-                        .defaultSuccessUrl("/admin", true)
-                        .permitAll())
+                        .defaultSuccessUrl("/admin", true))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/logon")

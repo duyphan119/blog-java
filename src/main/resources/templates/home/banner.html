@@ -1,0 +1,47 @@
+<section class="banner-post-area" th:fragment="fe_home_banner">
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <div class="col-lg-6" th:each="article : ${bannerArticleList}">
+        <div class="banner-post-item">
+          <div class="banner-post-thumb">
+            <a th:href="@{/article/{articleSlug}(articleSlug=${article.slug})}"
+              ><img th:src="${article.imageUrl}" alt=""
+            /></a>
+          </div>
+          <div class="banner-post-content">
+            <a
+              href="blog.html"
+              th:text="${article.category.name}"
+              class="post-tag"
+              >Fighter</a
+            >
+            <h2 class="post-title">
+              <a href="blog-details.html" th:text="${article.title}"
+                >Mobile Apple Planning Big Mac Redesign <br />
+                ander Nigh HalfMacShare</a
+              >
+            </h2>
+            <div class="blog-post-meta white-blog-meta">
+              <ul class="list-wrap">
+                <li>
+                  <i class="flaticon-user"></i>by<a
+                    href="author.html"
+                    th:text="${article.author.firstName + ' ' + article.author.lastName}"
+                    >Admin</a
+                  >
+                </li>
+                <li>
+                  <i class="flaticon-calendar"></i>
+                  <th:block
+                    th:text="${#dates.format(article.createdAt,'yyyy-MM-dd')}"
+                    >27 August, 2024
+                  </th:block>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 package com.blog.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,11 +51,11 @@ public class Article {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -65,4 +67,7 @@ public class Article {
 
     @Column(name = "is_active", nullable = true, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
+
+    @OneToMany(mappedBy = "article")
+    private Set<ArticleComment> comments;
 }

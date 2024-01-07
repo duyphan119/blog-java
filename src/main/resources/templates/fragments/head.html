@@ -1,7 +1,7 @@
-<head th:fragment="fe_head">
+<th:block th:fragment="fe_head">
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Zaira - News Magazine HTML Template</title>
+  <title th:text="${title}">Zaira - News Magazine HTML Template</title>
   <meta name="description" content="Zaira - News Magazine HTML Template" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -23,4 +23,8 @@
   <link rel="stylesheet" th:href="@{/assets/fe/css/default.css}" />
   <link rel="stylesheet" th:href="@{/assets/fe/css/style.css}" />
   <link rel="stylesheet" th:href="@{/assets/fe/css/responsive.css}" />
-</head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+  />
+</th:block>

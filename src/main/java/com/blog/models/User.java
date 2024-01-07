@@ -1,6 +1,6 @@
 package com.blog.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -53,11 +53,11 @@ public class User {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -65,5 +65,9 @@ public class User {
 
     @OneToMany(mappedBy = "author")
     private Set<Article> articles;
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
 
 }

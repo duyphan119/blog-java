@@ -7,4 +7,59 @@
   <script th:src="@{/assets/fe/js/ajax-form.js}"></script>
   <script th:src="@{/assets/fe/js/wow.min.js}"></script>
   <script th:src="@{/assets/fe/js/main.js}"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+  ></script>
+  <script>
+    function toJson(formData) {
+      var jsonObject = {};
+      formData.split("&").forEach(function (pair) {
+        pair = pair.split("=");
+        let key = pair[0];
+        let value = pair[1];
+        let splitDot = key.split(".");
+
+        if (splitDot.length > 1) {
+          // let firstLetter = splitDot[1][0];
+          // key =
+          //   splitDot[0] +
+          //   firstLetter.toUpperCase() +
+          //   splitDot[1].substring(1);
+          key = splitDot[0];
+          jsonObject[key] = {
+            [splitDot[1]]: value,
+          };
+        } else {
+          jsonObject[key] = decodeURIComponent(value || "");
+        }
+      });
+      console.log(jsonObject);
+      return JSON.stringify(jsonObject);
+    }
+  </script>
+  <script>
+    function showToast(
+      { title, type } = { title: "Success", type: "success" }
+    ) {
+      toastr.options = {
+        closeButton: true,
+        debug: false,
+        newestOnTop: true,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        preventDuplicates: true,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "3000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+      };
+      console.log({ title, type });
+      toastr[type || "success"](title || "Are you the 6 fingered man?");
+    }
+  </script>
 </th:block>

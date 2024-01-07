@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{admin/fragments/head :: head}"> </head>
+  <head>
+    <th:block th:replace="~{admin/fragments/head :: head}"></th:block>
+  </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       <!-- Navbar -->
@@ -125,7 +127,7 @@
                             />
                           </td>
                           <td
-                            th:text="${#temporals.format(category.createdAt,'yyyy-MM-dd')}"
+                            th:text="${#dates.format(category.createdAt,'yyyy-MM-dd')}"
                           >
                             2024-01-01
                           </td>
