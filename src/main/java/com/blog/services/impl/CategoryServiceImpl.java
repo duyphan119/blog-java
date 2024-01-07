@@ -1,6 +1,6 @@
 package com.blog.services.impl;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,8 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
     public Category create(Category category) {
         try {
             category.setSlug(utilService.toSlug(category.getName()));
-            category.setCreatedAt(LocalDateTime.now());
-            category.setUpdatedAt(LocalDateTime.now());
             return categoryRepository.save(category);
         } catch (Exception e) {
             return null;
@@ -52,7 +50,6 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Category category) {
         try {
             category.setSlug(utilService.toSlug(category.getName()));
-            category.setUpdatedAt(LocalDateTime.now());
             return categoryRepository.save(category);
         } catch (Exception e) {
             return null;
@@ -77,6 +74,20 @@ public class CategoryServiceImpl implements CategoryService {
         String keyword = q == null ? "" : q;
 
         return categoryRepository.findByNameIgnoreCaseContainingOrSlugIgnoreCaseContaining(keyword, keyword, pageable);
+    }
+
+    @Override
+    public List<Category> findExciting(Integer limit) {
+        Map<String, String> categoryMap = new HashMap<>();
+        categoryMap.put("sort_by", "name");
+        categoryMap.put("sort_type", "asc");
+        Pageable pageable = utilService.getPageable(categoryMap, limit);
+        return categoryRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public Optional<Category> findBySlug(String slug) {
+        return this.categoryRepository.findBySlug(slug);
     }
 
 }

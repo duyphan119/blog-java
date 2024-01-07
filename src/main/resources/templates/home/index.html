@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Mirrored from themegenix.net/html/zaira/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Dec 2023 03:45:19 GMT -->
+  <head>
+    <th:block th:replace="~{fragments/head :: fe_head}"></th:block>
+  </head>
+
+  <body>
+    <header th:replace="~{fragments/fixed-elm :: fe_fixed_elm}"></header>
+    <!-- header-area -->
+    <header th:replace="~{fragments/header :: fe_header}"></header>
+    <!-- header-area-end -->
+
+    <!-- main-area -->
+    <main class="fix">
+      <!-- banner-post-area -->
+      <section th:replace="~{/home/banner :: fe_home_banner}"></section>
+      <!-- banner-post-area-end -->
+
+      <!-- categories-area -->
+      <section th:replace="~{/home/categories :: fe_home_categories}"></section>
+      <!-- categories-area-end -->
+
+      <!-- spotlight-post-area -->
+      <section
+        th:replace="~{/home/spotlight-post :: fe_home_spotlight_post}"
+      ></section>
+      <!-- spotlight-post-area-end -->
+
+      <!-- weekly-post-area -->
+      <section
+        th:replace="~{/home/weekly-post :: fe_home_weekly_post}"
+      ></section>
+      <!-- weekly-post-area-end -->
+
+      <!-- newsletter-area -->
+      <section th:replace="~{/home/newsletter :: fe_home_newsletter}"></section>
+      <!-- newsletter-area-end -->
+    </main>
+
+    <!-- main-area-end -->
+
+    <!-- footer-area -->
+    <footer th:replace="~{/fragments/footer :: footer}"></footer>
+    <!-- footer-area-end -->
+
+    <!-- JS here -->
+    <th:block th:replace="~{/fragments/scripts :: fe_scripts}"></th:block>
+  </body>
+
+  <!-- Mirrored from themegenix.net/html/zaira/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Dec 2023 03:45:27 GMT -->
+</html>

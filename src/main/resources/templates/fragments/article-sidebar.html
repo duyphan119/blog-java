@@ -1,0 +1,130 @@
+<div class="sidebar-wrap" th:fragment="fe_article_sidebar">
+  <div class="sidebar-widget">
+    <div class="sidebar-search">
+      <form action="/article" method="GET">
+        <input name="cat" hidden th:value="${categorySlug}" />
+        <input name="p" hidden th:value="${currentPage}" />
+        <input
+          type="text"
+          name="q"
+          th:value="${keyword}"
+          placeholder="Tìm kiếm..."
+        />
+        <button type="submit">
+          <i class="flaticon-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="sidebar-widget sidebar-widget-two">
+    <div class="widget-title mb-30">
+      <h6 class="title">Danh mục nổi bật</h6>
+      <div class="section-title-line"></div>
+    </div>
+    <div class="sidebar-categories">
+      <ul class="list-wrap">
+        <li th:each="category : ${hotCategoryList}">
+          <a
+            th:href="@{/article(cat=${category.slug})}"
+            th:attr="data-background=${category.imageUrl}"
+          >
+            <span class="post-tag post-tag-three" th:text="${category.name}"
+              >Technology</span
+            >
+            <span class="right-arrow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z"
+                  fill="currentcolor"
+                ></path>
+                <path
+                  d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z"
+                  fill="currentcolor"
+                ></path>
+              </svg>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar-widget sidebar-widget-two">
+    <div class="widget-title mb-25">
+      <h2 class="title">Đăng ký & Theo dõi</h2>
+      <div class="section-title-line"></div>
+    </div>
+    <div class="sidebar-social-wrap">
+      <ul class="list-wrap">
+        <li>
+          <a th:href="${contactInformation.facebookUrl}"
+            ><i class="fab fa-facebook-f"></i>facebook</a
+          >
+        </li>
+        <li>
+          <a th:href="${contactInformation.twitterUrl}"
+            ><i class="fab fa-twitter"></i>twitter</a
+          >
+        </li>
+        <li>
+          <a th:href="${contactInformation.instagramUrl}"
+            ><i class="fab fa-instagram"></i>instagram</a
+          >
+        </li>
+        <li>
+          <a th:href="${contactInformation.youtubeUrl}"
+            ><i class="fab fa-youtube"></i>youtube</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar-widget sidebar-widget-two">
+    <div class="widget-title mb-30">
+      <h6 class="title">Bài viết gần đây</h6>
+      <div class="section-title-line"></div>
+    </div>
+    <div class="hot-post-wrap">
+      <div
+        class="hot-post-item"
+        th:each="recentArticle, stat : ${recentArticleList}"
+      >
+        <div class="hot-post-thumb" th:if="${stat.index ==0}">
+          <a href="blog-details.html"
+            ><img th:src="@{/assets/fe/img/blog/blog_rc_post.jpg}" alt=""
+          /></a>
+        </div>
+        <div class="hot-post-content">
+          <a
+            th:href="@{/article(cat=${recentArticle.category.slug})}"
+            class="post-tag"
+            th:text="${recentArticle.category.name}"
+            >Adventure</a
+          >
+          <h4 class="post-title">
+            <a
+              th:href="@{/article/{articleSlug}(articleSlug=${recentArticle.slug})}"
+              th:text="${recentArticle.title}"
+              >Inspiring Web Design And UX Showcases</a
+            >
+          </h4>
+          <div class="blog-post-meta">
+            <ul class="list-wrap">
+              <li>
+                <i class="flaticon-calendar"></i
+                ><span
+                  th:text="${#dates.format(recentArticle.createdAt,'yyyy-MM-dd')}"
+                  >27 August, 2024</span
+                >
+              </li>
+              <li><i class="flaticon-history"></i>20 Mins</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

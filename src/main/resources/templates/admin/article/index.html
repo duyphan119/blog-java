@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{admin/fragments/head :: head}"> </head>
+  <head>
+    <th:block th:replace="~{admin/fragments/head :: head}"></th:block>
+  </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       <!-- Preloader -->
@@ -126,7 +128,7 @@
                       </thead>
                       <tbody>
                         <tr th:each="article, articleStat : ${articleList}">
-                          <td th:text="${articleStat.count}">1</td>
+                          <td th:text="${articleStat.index + 1}">1</td>
                           <td th:text="${article.title}">Title</td>
                           <td style="width: 136px">
                             <img
@@ -138,7 +140,7 @@
                             />
                           </td>
                           <td
-                            th:text="${#temporals.format(article.createdAt,'yyyy-MM-dd')}"
+                            th:text="${#dates.format(article.createdAt,'yyyy-MM-dd')}"
                           >
                             2024-01-01
                           </td>

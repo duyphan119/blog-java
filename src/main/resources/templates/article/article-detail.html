@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Mirrored from themegenix.net/html/zaira/blog-details-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Dec 2023 03:45:59 GMT -->
+  <head>
+    <th:block th:replace="~{fragments/head :: fe_head}"></th:block>
+  </head>
+  <body>
+    <th:block th:replace="~{fragments/fixed-elm :: fe_fixed_elm}"></th:block>
+
+    <!-- header-area -->
+    <header th:replace="~{fragments/header :: fe_header}"></header>
+    <!-- header-area-end -->
+
+    <!-- main-area -->
+    <main class="fix">
+      <!-- breadcrumb-area -->
+      <div class="breadcrumb-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="breadcrumb-content">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a th:href="@{/}">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a th:href="@{/article}">Bài viết</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a
+                        th:href="@{/article(cat=${article.category.slug})}"
+                        th:text="${article.category.name}"
+                        >Bài viết</a
+                      >
+                    </li>
+                    <li
+                      class="breadcrumb-item active"
+                      th:text="${article.title}"
+                      aria-current="page"
+                    >
+                      Blogs
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- breadcrumb-area-end -->
+
+      <!-- blog-details-area -->
+      <section class="blog-details-area pt-60 pb-60">
+        <div class="container">
+          <div class="author-inner-wrap blog-inner-wrap">
+            <div class="row justify-content-center">
+              <div class="col-70 order-0 order-xl-2">
+                <div class="blog-details-wrap">
+                  <div class="blog-details-content">
+                    <div class="blog-details-content-top">
+                      <a
+                        th:href="@{/article(cat=${article.category.slug})}"
+                        class="post-tag"
+                        th:text="${article.category.name}"
+                        >Appitizer</a
+                      >
+                      <h2 class="title" th:text="${article.title}">
+                        Emerging Global Trends in Leather and Fashion Nicely
+                        Photo Area Shooting With Hand Classic Style
+                      </h2>
+                      <div class="bd-content-inner">
+                        <div class="blog-post-meta">
+                          <ul class="list-wrap">
+                            <li>
+                              <i class="flaticon-user"></i>by<a
+                                th:href="author.html"
+                                th:text="${article.author.fullName}"
+                                >Admin</a
+                              >
+                            </li>
+                            <li>
+                              <i class="flaticon-calendar"></i>
+                              <span
+                                th:text="${#dates.format(article.createdAt,'yyyy-MM-dd')}"
+                              >
+                                27 August, 2024
+                              </span>
+                            </li>
+                            <li>
+                              <i class="flaticon-chat"></i
+                              ><a href="blog-details.html">05 Comments</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="blog-details-social">
+                          <ul class="list-wrap">
+                            <li>
+                              <a
+                                th:href="${contactInformation.facebookUrl}"
+                                id="facebook-sharing"
+                                ><i class="fab fa-facebook-f"></i
+                              ></a>
+                            </li>
+                            <li>
+                              <a
+                                th:href="${contactInformation.twitterUrl}"
+                                id="twitter-sharing"
+                                ><i class="fab fa-twitter"></i
+                              ></a>
+                            </li>
+                          </ul>
+                          <script>
+                            const url = window.location.href;
+
+                            document
+                              .getElementById("facebook-sharing")
+                              .setAttribute(
+                                "href",
+                                `https://www.facebook.com/sharer/sharer.php?u=${url}`
+                              );
+                            document
+                              .getElementById("twitter-sharing")
+                              .setAttribute(
+                                "href",
+                                `https://twitter.com/intent/tweet?url=${url}`
+                              );
+                          </script>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="blog-details-thumb">
+                      <img th:src="${article.imageUrl}" alt="" />
+                    </div>
+                    <div class="content" th:utext="${article.content}"></div>
+                    <div class="blog-details-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-lg-6">
+                          <div class="post-tags">
+                            <h5 class="title">Tags:</h5>
+                            <ul class="list-wrap">
+                              <li><a href="blog.html">Art & Design</a></li>
+                              <li><a href="blog.html">Video</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="post-share">
+                            <h5 class="title">Share:</h5>
+                            <ul class="list-wrap">
+                              <li>
+                                <a href="#"
+                                  ><i class="fab fa-facebook-f"></i
+                                ></a>
+                              </li>
+                              <li>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                              </li>
+                              <li>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                              </li>
+                              <li>
+                                <a href="#"
+                                  ><i class="fab fa-linkedin-in"></i
+                                ></a>
+                              </li>
+                              <li>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="blog-avatar-wrap mb-50">
+                    <div class="blog-avatar-img">
+                      <a href="#" style="display: block"
+                        ><img
+                          th:src="${article.author.imageUrl}"
+                          height="96px"
+                          width="96px"
+                          alt="img"
+                          style="object-fit: cover"
+                      /></a>
+                    </div>
+                    <div class="blog-avatar-info">
+                      <span class="designation">Author</span>
+                      <h4 class="name">
+                        <a
+                          href="author.html"
+                          th:text="${article.author.fullName}"
+                          >Cameron Williamson</a
+                        >
+                      </h4>
+                      <p>
+                        Finanappreciate your trust greatly Our clients choose
+                        dentace ducts because kneer ow we are the best area
+                        Awaitingare really.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="pev-next-post-wrap">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="post-item">
+                          <div class="thumb">
+                            <a
+                              th:href="@{/article/{articleSlug}(articleSlug=${previousArticle.slug})}"
+                              ><img th:src="${previousArticle.imageUrl}" alt=""
+                            /></a>
+                          </div>
+                          <div class="content">
+                            <span>Previous Post</span>
+                            <h5 class="post-title">
+                              <a
+                                th:href="@{/article/{articleSlug}(articleSlug=${previousArticle.slug})}"
+                                th:text="${previousArticle.title}"
+                                >Make May Magnificent <br />
+                                Wallpapers Edition</a
+                              >
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="post-item next-post">
+                          <div class="thumb">
+                            <a
+                              th:href="@{/article/{articleSlug}(articleSlug=${nextArticle.slug})}"
+                              ><img th:src="${nextArticle.imageUrl}" alt=""
+                            /></a>
+                          </div>
+                          <div class="content">
+                            <span>Next Post</span>
+                            <h5 class="post-title">
+                              <a
+                                th:href="@{/article/{articleSlug}(articleSlug=${nextArticle.slug})}"
+                                th:text="${nextArticle.title}"
+                                >Write Better By Borrowing <br />
+                                Ideas JavaScript Functions</a
+                              >
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="comments-wrap"
+                    th:if="${not #lists.isEmpty(article.comments)}"
+                  >
+                    <h3 class="comments-wrap-title">02 Comments</h3>
+                    <div class="latest-comments">
+                      <ul class="list-wrap" id="comments">
+                        <li th:each="comment : ${article.comments}">
+                          <div class="comments-box">
+                            <div class="comments-avatar">
+                              <img
+                                th:src="@{/assets/fe/img/images/comment01.png}"
+                                alt="img"
+                              />
+                            </div>
+                            <div class="comments-text" style="flex: 1">
+                              <div class="avatar-name">
+                                <h6 class="name" th:text="${comment.fullName}">
+                                  Alebary keon
+                                </h6>
+                                <span
+                                  class="date"
+                                  th:text="${#dates.format(comment.createdAt,'yyyy-MM-dd')}"
+                                  >27 August, 2024</span
+                                >
+                              </div>
+                              <p th:text="${comment.content}">
+                                Finanappreciate your trust greatly Our clients
+                                choose dentace ducts because know we are the
+                                best area Awaitingare really.
+                              </p>
+                              <a href="#" class="reply-btn">Reply</a>
+                            </div>
+                          </div>
+                          <ul
+                            class="children"
+                            th:if="${not #lists.isEmpty(comment.repComments)}"
+                          >
+                            <li th:each="repComment : ${comment.repComments}">
+                              <div class="comments-box">
+                                <div class="comments-avatar">
+                                  <img
+                                    th:src="@{/assets/fe/img/images/comment02.png}"
+                                    alt="img"
+                                  />
+                                </div>
+                                <div class="comments-text">
+                                  <div class="avatar-name">
+                                    <h6
+                                      class="name"
+                                      th:text="${repComment.fullName}"
+                                    >
+                                      Lukas Javeb
+                                    </h6>
+                                    <span
+                                      class="date"
+                                      th:text="${#dates.format(repComment.createdAt,'yyyy-MM-dd')}"
+                                      >27 August, 2024</span
+                                    >
+                                  </div>
+                                  <p th:text="${repComment.content}">
+                                    Finanappreciate your trust greatly Our
+                                    clients choose dentace ducts because know we
+                                    are the best area Awaitingare really.
+                                  </p>
+                                  <a href="#" class="reply-btn">Reply</a>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="comment-respond">
+                    <h3 class="comment-reply-title">Post a comment</h3>
+                    <form
+                      th:action="@{/api/article-comment}"
+                      th:object="${articleComment}"
+                      class="comment-form"
+                      id="comment-form"
+                    >
+                      <input th:field="*{article.id}" hidden />
+                      <p class="comment-notes">
+                        Your email address will not be published. Required
+                        fields are marked *
+                      </p>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-grp">
+                            <input
+                              type="text"
+                              placeholder="Full name"
+                              th:field="*{fullName}"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-grp">
+                            <input
+                              type="email"
+                              placeholder="Email"
+                              th:field="*{email}"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-grp">
+                        <textarea
+                          placeholder="Comment"
+                          th:field="*{content}"
+                        ></textarea>
+                      </div>
+                      <div class="form-grp checkbox-grp">
+                        <input type="checkbox" id="checkbox_two" />
+                        <label for="checkbox_two"
+                          >Save my name, email, and website in this browser for
+                          the next time I comment.</label
+                        >
+                      </div>
+                      <button type="submit" class="btn btn-two">
+                        Post Comment
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-30">
+                <th:block
+                  th:replace="~{/fragments/article-sidebar :: fe_article_sidebar}"
+                ></th:block>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- blog-details-area-end -->
+    </main>
+    <!-- main-area-end -->
+
+    <!-- footer-area -->
+    <footer th:replace="~{/fragments/footer :: footer}"></footer>
+    <!-- footer-area-end -->
+
+    <!-- JS here -->
+    <th:block th:replace="~{/fragments/scripts :: fe_scripts}"></th:block>
+  </body>
+
+  <!-- Mirrored from themegenix.net/html/zaira/blog-details-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Dec 2023 03:45:59 GMT -->
+</html>

@@ -1,0 +1,42 @@
+<div
+  th:fragment="fe_article_pagination"
+  class="pagination-wrap mt-60"
+  th:if="${totalPages > 1}"
+>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination list-wrap">
+      <li class="page-item" th:if="${currentPage > 1}">
+        <a class="page-link" th:href="@{/article(cat=${categorySlug})}">«</a>
+      </li>
+      <li class="page-item" th:if="${currentPage > 1}">
+        <a
+          class="page-link"
+          th:href="@{/article(p=${currentPage-1},cat=${categorySlug})}"
+          th:text="${currentPage - 1}"
+          >1</a
+        >
+      </li>
+      <li class="page-item active">
+        <a class="page-link" id="currentPage" th:text="${currentPage}">2</a>
+      </li>
+      <li
+        class="page-item"
+        th:if="${currentPage <= totalPages and currentPage < totalPages }"
+      >
+        <a
+          class="page-link"
+          th:href="@{/article(p=${currentPage + 1},cat=${categorySlug})}"
+          th:text="${currentPage + 1}"
+          >3</a
+        >
+      </li>
+      <li class="page-item" th:if="${currentPage < totalPages}">
+        <a
+          class="page-link"
+          th:href="@{/article(p=${totalPages},cat=${categorySlug})}"
+          >»</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

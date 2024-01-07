@@ -1,0 +1,325 @@
+<section
+  class="spotlight-post-area pt-70 pb-60"
+  th:fragment="fe_home_spotlight_post"
+>
+  <div class="spotlight-post-inner-wrap">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-70">
+          <div class="spotlight-post-item-wrap">
+            <div class="section-title-wrap-three mb-30">
+              <div class="section-title-three">
+                <h6 class="title">
+                  Bài viết hôm nay
+                  <span class="section-title-svg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 246 40"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                </h6>
+                <div class="section-title-line-three"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-57">
+                <div class="spotlight-post big-post">
+                  <div class="spotlight-post-thumb">
+                    <a href="blog-details.html"
+                      ><img th:src="${todayArticleList[0].imageUrl}" alt=""
+                    /></a>
+                  </div>
+                  <div class="spotlight-post-content">
+                    <a
+                      th:href="@{/article(cat=${todayArticleList[0].category.slug})}"
+                      class="post-tag-two"
+                      th:text="${todayArticleList[0].category.name}"
+                      >Racing</a
+                    >
+                    <h2 class="post-title bold-underline">
+                      <a
+                        th:href="@{/article/{articleSlug}(articleSlug=${todayArticleList[0].slug})}"
+                        th:text="${todayArticleList[0].title}"
+                        >How To Build A Magazine Layout With CSS Grid Areas</a
+                      >
+                    </h2>
+                    <div class="blog-post-meta">
+                      <ul class="list-wrap">
+                        <li>
+                          <i class="flaticon-user"></i>by<a href="author.html">
+                            <span
+                              th:text="${todayArticleList[0].author.fullName}"
+                            ></span>
+                          </a>
+                        </li>
+                        <li>
+                          <i class="flaticon-calendar"></i>
+                          <span
+                            th:text="${#dates.format(todayArticleList[0].createdAt,'yyyy-MM-dd')}"
+                            >27 August, 2024</span
+                          >
+                        </li>
+                        <li><i class="flaticon-history"></i>20 Mins</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-43">
+                <div
+                  class="spotlight-post small-post"
+                  th:each="todayArticle, iterStat : ${todayArticleList}"
+                  th:if="${iterStat.index > 0}"
+                >
+                  <div class="spotlight-post-thumb">
+                    <a
+                      th:href="@{/article/{articleSlug}(articleSlug=${todayArticle.slug})}"
+                      ><img th:src="${todayArticle.imageUrl}" alt=""
+                    /></a>
+                  </div>
+                  <div class="spotlight-post-content">
+                    <a
+                      th:href="@{/article(cat=${todayArticle.category.slug})}"
+                      th:text="${todayArticle.category.name}"
+                      class="post-tag-two"
+                      >Action</a
+                    >
+                    <h2 class="post-title">
+                      <a
+                        th:href="@{/article/{articleSlug}(articleSlug=${todayArticle.slug})}"
+                        th:text="${todayArticle.title}"
+                        class="line-clamp-3"
+                        >Fortnite Ratings are Skyrocketing</a
+                      >
+                    </h2>
+                    <div class="blog-post-meta">
+                      <ul class="list-wrap">
+                        <li>
+                          <i class="flaticon-calendar"></i>
+                          <span
+                            th:text="${#dates.format(todayArticle.createdAt,'yyyy-MM-dd')}"
+                            >27 August, 2024</span
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="popular-post-item-wrap">
+            <div class="section-title-wrap-three mb-30">
+              <div class="section-title-three">
+                <h6 class="title">
+                  Bài viết phổ biến
+                  <span class="section-title-svg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 246 40"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                </h6>
+                <div class="section-title-line-three"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                th:class="${iterStat.index < 2 ? 'col-lg-6' : 'col-lg-4'}"
+                th:each="popularArticle, iterStat : ${popularArticleList}"
+              >
+                <div class="ta-overlay-post-two">
+                  <div class="overlay-post-thumb-two">
+                    <a
+                      th:href="@{/article/{articleSlug}(articleSlug=${popularArticle.slug})}"
+                      ><img th:src="${popularArticle.imageUrl}" alt=""
+                    /></a>
+                  </div>
+                  <div class="overlay-post-content-two">
+                    <a
+                      th:href="@{/article(cat=${popularArticle.category.slug})}"
+                      class="post-tag post-tag-three"
+                      th:text="${popularArticle.category.name}"
+                      >Racing</a
+                    >
+                    <h2 class="post-title">
+                      <a
+                        th:href="@{/article/{articleSlug}(articleSlug=${popularArticle.slug})}"
+                        th:text="${popularArticle.title}"
+                        >Racing Games Browned Butte roadert Cookies Daily
+                        Breakfast</a
+                      >
+                    </h2>
+                    <div class="blog-post-meta white-blog-meta">
+                      <ul class="list-wrap">
+                        <li>
+                          <i class="flaticon-calendar"></i>
+                          <span
+                            th:text="${#dates.format(popularArticle.createdAt,'yyyy-MM-dd')}"
+                            >27 August, 2024</span
+                          >
+                        </li>
+                        <li><i class="flaticon-history"></i>20 Mins</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-30">
+          <div class="sidebar-wrap no-sticky">
+            <div class="sidebar-widget sidebar-widget-two">
+              <div class="widget-title-two mb-30">
+                <h6 class="title">
+                  Follow Us
+                  <span class="section-title-svg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 246 40"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                </h6>
+                <div class="section-title-line-three"></div>
+              </div>
+              <div class="sidebar-social-wrap">
+                <ul class="list-wrap">
+                  <li>
+                    <a href="#"><i class="fab fa-facebook-f"></i>facebook</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-twitter"></i>twitter</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-youtube"></i>youtube</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-linkedin-in"></i>LinkedIn</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-pinterest-p"></i>Pinterest</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="sidebar-widget sidebar-widget-two">
+              <div class="sidebar-newsletter">
+                <div class="icon"><i class="flaticon-envelope"></i></div>
+                <h4 class="title">Daily Newsletter</h4>
+                <p>Get all the top stories from Blogs to keep track.</p>
+                <div class="sidebar-newsletter-form">
+                  <form action="#">
+                    <input type="text" placeholder="Enter your e-mail" />
+                    <button type="submit">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z"
+                          fill="currentcolor"
+                        />
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-widget sidebar-widget-two">
+              <div class="widget-title-two mb-30">
+                <h6 class="title">
+                  Bài Viết Gần Đây
+                  <span class="section-title-svg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 246 40"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                </h6>
+                <div class="section-title-line-three"></div>
+              </div>
+              <div class="rc-post-wrap">
+                <div
+                  class="popular-post"
+                  th:each="recentArticle : ${recentArticleList}"
+                >
+                  <div class="thumb">
+                    <a
+                      th:href="@{/article/{articleSlug}(articleSlug=${recentArticle.slug})}"
+                      ><img
+                        th:src="${recentArticle.imageUrl}"
+                        width="110px"
+                        height="110px"
+                        style="object-fit: cover"
+                        alt=""
+                    /></a>
+                  </div>
+                  <div class="content">
+                    <a
+                      th:href="@{/article(cat=${recentArticle.category.slug})}"
+                      th:text="${recentArticle.category.name}"
+                      class="post-tag-two"
+                      >Racing</a
+                    >
+                    <h2 class="post-title">
+                      <a
+                        th:href="@{/article/{articleSlug}(articleSlug=${recentArticle.slug})}"
+                        th:text="${recentArticle.title}"
+                        >Racing Games Browned Butte roadert Cookies Daily
+                        Breakfast</a
+                      >
+                    </h2>
+                    <div class="blog-post-meta">
+                      <ul class="list-wrap">
+                        <li>
+                          <i class="flaticon-calendar"></i
+                          ><span
+                            th:text="${#dates.format(recentArticle.createdAt,'yyyy-MM-dd')}"
+                            >27 August, 2024</span
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
